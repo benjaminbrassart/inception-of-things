@@ -9,9 +9,10 @@ Vagrant.configure("2") do |config|
 
   # common virtualbox config
   config.vm.provider "virtualbox" do |vb|
-    vb.memory = "1024"
+    vb.memory = 1536 # 1.5 GB
     vb.cpus = 1
     vb.customize ["modifyvm", :id, "--cableconnected1", "on"]
+    vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
   end
 
   # install k3s
@@ -27,13 +28,13 @@ Vagrant.configure("2") do |config|
     end
   end
 
-  # # worker node config
-  # config.vm.define "#{USER}SW" do |worker|
-  #   worker.vm.network "private_network", ip: "192.168.56.111"
-  #   worker.vm.hostname = "#{USER}SW"
+  # worker node config
+  config.vm.define "#{USER}SW" do |worker|
+    worker.vm.network "private_network", ip: "192.168.56.111"
+    worker.vm.hostname = "#{USER}SW"
 
-  #   worker.vm.provider "virtualbox" do |vb|
-  #     vb.name = "#{USER}SW"
-  #   end
-  # end
+    worker.vm.provider "virtualbox" do |vb|
+      vb.name = "#{USER}SW"
+    end
+  end
 end
