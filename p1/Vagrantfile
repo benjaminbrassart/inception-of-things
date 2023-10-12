@@ -1,0 +1,42 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+
+  common_provisioning = <<-SHELL
+    apk update
+    apk upgrade
+    apk add --update curl
+    echo 'vagrant:vagrant' | chpasswd
+    sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+    service sshd restart
+  SHELL
+
+  #Superviser VM
+  config.vm.define "estoffelS" do |server|
+    server.vm.box = "generic/alpine318"
+    server.vm.network "private_network", type: "static", ip: "192.168.56.110"
+    server.vm.provider "virtualbox" do |vb|
+      vb.memory = "1024"
+    end
+    server.vm.hostname = "estoffelS"
+    server.vm.provision "shell", inline: common_provisioning
+    server.vm.provision "shell", inline: <<-SHELL
+
+    # server.vm.provision "shell", inline: "curl -sfL https://get.k3s.io | sh -s - server --no-deploy=traefik"
+      echo "export TOKEN=\$(sudo cat /var/lib/rancher/k3s/server/node-token)" >> /home/vagrant/.bashrc
+    SHELL
+  end
+
+  #Worker VM
+  config.vm.define "estoffelSW" do |serverworker|
+    serverworker.vm.box = "generic/alpine318"
+    serverworker.vm.network "private_network", type: "static", ip: "192.168.56.111"
+    serverworker.vm.provider "virtualbox" do |vb|
+      vb.memory = "1024"
+    end
+    serverworker.vm.hostname = "estoffelSW"
+    serverworker.vm.provision "shell", inline: common_provisioning
+    serverworker.vm.provision "shell", inline: "curl -sfL https://get.k3s.io | K3S_URL='https://192.168.56.110:6443' K3S_TOKEN="\$TOKEN" sh -"
+  end
+end
