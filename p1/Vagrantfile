@@ -5,9 +5,6 @@ USER = ENV['USER']
 
 Vagrant.configure("2") do |config|
   config.vm.box = "debian/bookworm64"
-
-  # config.vm.provision "shell", privileged: true, inline: "apt-get install virtualbox-guest-dkms"
-
   config.vm.synced_folder "./shared", "/vagrant_shared", create: true
 
   config.vm.provision "shell", privileged: true, path: "scripts/common.sh"
