@@ -14,3 +14,22 @@ Command: ["import", "/mnt/nfs/homes/bbrassar/.vagrant.d/boxes/debian-VAGRANTSLAS
 ```
 
 -> EDQUOT - Disk quota exceeded
+
+```
+The guest machine entered an invalid state while waiting for it
+to boot. Valid states are 'starting, running'. The machine is in the
+'poweroff' state. Please verify everything is configured
+properly and try again.
+
+If the provider you're using has a GUI that comes with it,
+it is often helpful to open that and watch the machine, since the
+GUI often has more helpful error messages than Vagrant can retrieve.
+For example, if you're using VirtualBox, run `vagrant up` while the
+VirtualBox GUI is open.
+
+The primary issue for this error is that the provider you're using
+is not properly configured. This is very rarely a Vagrant issue.
+```
+
+-> For some reason, VirtualBox 6.1.44 + vagrant 2.3.0 works and other combinations may not.
+https://discuss.hashicorp.com/t/virtualbox-ignores-command-line-from-vagrant/53156/2
