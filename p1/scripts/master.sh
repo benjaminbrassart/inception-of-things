@@ -10,7 +10,7 @@ export INSTALL_K3S_EXEC="server \
 --node-ip='${master_address}' \
 "
 
-curl -sfL 'https://get.k3s.io' | sh -
+curl -sfL 'https://get.k3s.io' | K3S_KUBECONFIG_MODE='644' sh -
 
 # yq -yi '.clusters[].cluster.server = "https://bbrassarS:6443"' /etc/rancher/k3s/k3s.yaml
 
