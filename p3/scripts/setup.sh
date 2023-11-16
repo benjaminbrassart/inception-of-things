@@ -65,6 +65,8 @@ install_k3s() {
         INSTALL_K3S_EXEC="server --cluster-init --bind-address=${master_address} --node-ip=${master_address}" \
         K3S_KUBECONFIG_MODE="644" \
         sh -
+
+    export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
 }
 
 install_k3d() {
@@ -73,10 +75,28 @@ install_k3d() {
     curl -sfL "https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh" | bash -
 }
 
+install_argocd() {
+    argocd_namespace="$1"
+    app_namespace="dev"
+
+    kubectl create namespace "${argocd_namespace}"
+    kubectl apply -n "${argocd_namespace}" -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+
+    kubectl create namespace "${app_namespace}"
+
+    argocd_tmp="$(mktemp)"
+
+    curl -sSL -o "${argocd_tmp}" https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
+    install -m 555 "${argocd_tmp}" /usr/local/bin/argocd
+    rm -f "${argocd_tmp}"
+}
+
 printf -- "---> Docker\n"
 install_docker
 printf -- "---> K3S\n"
 install_k3s "192.168.56.110"
 printf -- "---> K3D\n"
 install_k3d
+printf -- "---> Argo CD\n"
+install_argocd argocd
 printf -- "---> OK\n"
