@@ -16,3 +16,8 @@ export INSTALL_K3S_EXEC="server \
 "
 
 curl -sfL 'https://get.k3s.io' | K3S_KUBECONFIG_MODE='644' sh -
+
+kubectl apply -f confs/app1.yml
+kubectl apply -f confs/app2.yml
+kubectl apply -f confs/app3.yml
+kubectl apply -f confs/ingress.yml
