@@ -1,9 +1,14 @@
 hello
 
+Subject:
+https://cdn.intra.42.fr/pdf/pdf/68742/en.subject.pdf
+
 Videos:
 https://www.youtube.com/watch?v=czMCO1w-xQU&list=PLhW3qG5bs-L9S272lwi9encQOL9nMOnRa&index=1
 https://www.youtube.com/watch?v=Vcs_9U88EzI&list=PLn6POgpklwWqU5IQGKZXladpC8OWabyKI&index=1
 https://www.youtube.com/watch?v=5-PGV-r_684
+https://www.youtube.com/watch?v=80Ew_fsV4rM
+https://www.youtube.com/watch?v=T4Z7visMM4E
 
 Errors:
 ```
