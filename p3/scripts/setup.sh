@@ -2,11 +2,11 @@
 
 set -e
 
-update() {
+update_pkgs() {
     apt-get update
 }
 
-install() {
+install_pkg() {
     apt-get install -y -- "$@"
 }
 
@@ -41,14 +41,14 @@ add_docker_group() {
 }
 
 install_docker() {
-    update
-    install ca-certificates curl gnupg
+    update_pkgs
+    install_pkg ca-certificates curl gnupg
 
     add_gpg_key
     add_docker_repo
 
-    update
-    install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+    update_pkgs
+    install_pkg docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
     add_docker_group vagrant
 
@@ -56,8 +56,8 @@ install_docker() {
 }
 
 install_k3s() {
-    update
-    install curl
+    update_pkgs
+    install_pkg curl
 
     master_address="$1"
 
@@ -70,7 +70,7 @@ install_k3s() {
 }
 
 install_k3d() {
-    install curl
+    install_pkg curl
 
     curl -sfL "https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh" | bash -
 }
