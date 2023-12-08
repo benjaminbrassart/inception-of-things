@@ -93,9 +93,9 @@ install_argocd() {
     install -m 555 "${argocd_tmp}" /usr/local/bin/argocd
     rm -f "${argocd_tmp}"
 
-    kubectl patch svc argocd-server \
-        -n "${argocd_namespace}" \
-        -p '{"spec": {"type": "LoadBalancer"}}'
+#    kubectl patch svc argocd-server \
+#        -n "${argocd_namespace}" \
+#        -p '{"spec": {"type": "LoadBalancer"}}'
 
     kubectl wait -n "${argocd_namespace}" --for='condition=available' deployment --all --timeout=-1s
 
@@ -111,7 +111,9 @@ install_argocd() {
         --dest-server https://kubernetes.default.svc \
         --dest-namespace "${app_namespace}"
 
-    argocd app set playground --sync-policy automated
+#    argocd app set playground --sync-policy automated
+
+#    kubectl wait -n "${app_namespace}" --for='condition=available' deployment --all --timeout=-1s
 
     argocd app sync playground
 
