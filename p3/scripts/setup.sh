@@ -2,6 +2,8 @@
 
 set -e
 
+GITOPS_REPO_URL='https://github.com/benjaminbrassart/estoffel-bbrassar.git'
+
 update_pkgs() {
     apt-get update
 }
@@ -75,6 +77,7 @@ install_k3d() {
     curl -sfL "https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh" | bash -
 }
 
+# Mostly copy-paste from here: https://argo-cd.readthedocs.io/en/release-2.9/getting_started/
 install_argocd() {
     argocd_namespace="$1"
     app_namespace="dev"
@@ -89,7 +92,35 @@ install_argocd() {
     curl -sSL -o "${argocd_tmp}" https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
     install -m 555 "${argocd_tmp}" /usr/local/bin/argocd
     rm -f "${argocd_tmp}"
+
+    kubectl patch svc argocd-server \
+        -n "${argocd_namespace}" \
+        -p '{"spec": {"type": "LoadBalancer"}}'
+
+    kubectl wait -n "${argocd_namespace}" --for='condition=available' deployment --all --timeout=-1s
+
+    kubectl config set-context \
+        --current \
+        --namespace="${argocd_namespace}"
+
+    argocd login --core --insecure
+
+    argocd app create playground \
+        --repo "${GITOPS_REPO_URL}" \
+        --path . \
+        --dest-server https://kubernetes.default.svc \
+        --dest-namespace "${app_namespace}"
+
+    argocd app set playground --sync-policy automated
+
+    argocd app sync playground
+
+    kubectl wait -n "${app_namespace}" --for='condition=available' deployment --all --timeout=-1s
+
+    # TODO find why port forwarding always crashes after some time
 }
+
+set -x
 
 printf -- "---> Docker\n"
 install_docker
