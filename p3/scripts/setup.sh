@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+if [[ "$(id -u)" -ne 0 ]]; then
+    printf -- 'Please execute this script as root.\n' >&2
+    exit 1
+fi
+
 set -e
 
 MASTER_ADDRESS="$(ip -4 -o addr list enp0s3 | awk '{ print $4 }' | cut -d '/' -f 1)"
