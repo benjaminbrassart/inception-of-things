@@ -1,0 +1,8 @@
+global:
+  edition: ce
+  hosts:
+    domain: localhost
+    externIP: ${EXTERNAL_IP}
+
+certmanager-issuer:
+  email: bbrassar@student.42.fr
