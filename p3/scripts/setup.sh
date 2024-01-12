@@ -87,12 +87,6 @@ printf -- '\n'
 printf -- '  Argo CD admin password: %s\n' "${argo_password}"
 printf -- '\n'
 printf -- '--------------------------------------------\n'
-
-# -r        do not use backslash as inhibitor
-# -s        do not print input
-# -n 1      number of characters to read
-# -p ...    prompt value
-read -rs -n 1 -p 'Press a key to continue... '
 printf -- '\n'
 
 kubectl port-forward svc/argocd-server -n "${NAMESPACE_ARGOCD}" 8080:443 &
@@ -100,3 +94,4 @@ kubectl port-forward svc/argocd-server -n "${NAMESPACE_ARGOCD}" 8080:443 &
 printf -- '\n'
 printf -- '- Playground app: http://localhost:8888\n'
 printf -- '- Argo CD dashboard: http://localhost:8080\n'
+printf -- '\n'
