@@ -80,7 +80,7 @@ argocd app sync playground
 
 kubectl wait -n "${NAMESPACE_APP}" --for='condition=available' deployment --all --timeout=-1s
 
-argo_password="$(kubectl get secrets argocd-initial-admin-secret -o jsonpath='{ .data.password } | base64 -d')"
+argo_password="$(kubectl get secrets argocd-initial-admin-secret -o jsonpath='{ .data.password }' | base64 -d)"
 
 printf -- '--------------------------------------------\n'
 printf -- '\n'
@@ -98,5 +98,5 @@ printf -- '\n'
 kubectl port-forward svc/argocd-server -n "${NAMESPACE_ARGOCD}" 8080:443 &
 
 printf -- '\n'
-printf -- '- Playground app: http://localhost:8888'
-printf -- '- Argo CD dashboard: http://localhost:8888'
+printf -- '- Playground app: http://localhost:8888\n'
+printf -- '- Argo CD dashboard: http://localhost:8080\n'
