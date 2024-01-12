@@ -2,7 +2,7 @@
 
 set -e
 
-MASTER_ADDRESS='192.168.56.110'
+MASTER_ADDRESS="$(ip -4 -o addr list enp0s3 | awk '{ print $4 }' | cut -d '/' -f 1)"
 OS_ARCH="$(dpkg --print-architecture)"
 OS_RELEASE="$(. /etc/os-release && echo "${VERSION_CODENAME}")"
 KEYRING_DIR='/etc/apt/keyrings'
