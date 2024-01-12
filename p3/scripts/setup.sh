@@ -59,6 +59,8 @@ unset argo_tmp
 
 kubectl wait -n "${NAMESPACE_ARGOCD}" --for='condition=available' deployment --all --timeout=-1s
 
+kubectl patch svc argocd-server -n "${NAMESPACE_ARGOCD}" -p '{"spec": {"type": "LoadBalancer"}}'
+
 kubectl config set-context --current --namespace="${NAMESPACE_ARGOCD}"
 
 argocd login --core --insecure
@@ -73,4 +75,23 @@ argocd app sync playground
 
 kubectl wait -n "${NAMESPACE_APP}" --for='condition=available' deployment --all --timeout=-1s
 
-printf -- '---> Done!\n'
+argo_password="$(kubectl get secrets argocd-initial-admin-secret -o jsonpath='{ .data.password } | base64 -d')"
+
+printf -- '--------------------------------------------\n'
+printf -- '\n'
+printf -- '  Argo CD admin password: %s\n' "${argo_password}"
+printf -- '\n'
+printf -- '--------------------------------------------\n'
+
+# -r        do not use backslash as inhibitor
+# -s        do not print input
+# -n 1      number of characters to read
+# -p ...    prompt value
+read -rs -n 1 -p 'Press a key to continue... '
+printf -- '\n'
+
+kubectl port-forward svc/argocd-server -n "${NAMESPACE_ARGOCD}" 8080:443 &
+
+printf -- '\n'
+printf -- '- Playground app: http://localhost:8888'
+printf -- '- Argo CD dashboard: http://localhost:8888'
