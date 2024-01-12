@@ -27,7 +27,7 @@ echo "deb [arch=${OS_ARCH} signed-by=${DOCKER_GPG_KEY}] https://download.docker.
 apt-get update -y
 apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
-usermod -aG docker vagrant
+usermod -aG docker "${USER}"
 
 docker run hello-world
 
