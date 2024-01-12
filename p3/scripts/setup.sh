@@ -82,12 +82,12 @@ kubectl wait -n "${NAMESPACE_APP}" --for='condition=available' deployment --all 
 
 argo_password="$(kubectl get secrets argocd-initial-admin-secret -o jsonpath='{ .data.password }' | base64 -d)"
 
+printf -- '\n'
 printf -- '--------------------------------------------\n'
 printf -- '\n'
 printf -- '  Argo CD admin password: %s\n' "${argo_password}"
 printf -- '\n'
 printf -- '--------------------------------------------\n'
-printf -- '\n'
 
 kubectl port-forward svc/argocd-server -n "${NAMESPACE_ARGOCD}" 8080:443 &
 
