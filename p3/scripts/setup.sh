@@ -49,6 +49,8 @@ printf -- '---> K3D\n'
 
 curl -fsL 'https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh' | bash -
 
+k3d cluster create
+
 printf -- '---> Argo CD\n'
 
 kubectl create namespace "${NAMESPACE_APP}"
