@@ -92,6 +92,7 @@ printf -- '\n'
 printf -- '--------------------------------------------\n'
 
 kubectl port-forward svc/argocd-server -n "${NAMESPACE_ARGOCD}" 8080:443 &
+kubectl port-forward svc/playground -n "${NAMESPACE_APP}" 8888:8888 &
 
 printf -- '\n'
 printf -- '- Playground app: http://localhost:8888\n'
