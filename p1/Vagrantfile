@@ -2,31 +2,33 @@
 # vi: set ft=ruby :
 
 Vagrant.configure("2") do |config|
-  ip_address = "192.168.56.110"
+  config.vm.define "bbrassarS" do |server|
+    ip_address = "192.168.56.110"
 
-  config.vm.box = "debian/bookworm64"
-  config.vm.network "private_network", ip: ip_address
-  config.vm.hostname = "bbrassarS"
+    config.vm.box = "debian/bookworm64"
+    config.vm.network "private_network", ip: ip_address
+    config.vm.hostname = "bbrassarS"
 
-  config.vm.provider "virtualbox" do |vb|
-    vb.name = "bbrassarS"
-    vb.cpus = 1
-    vb.memory = 1024
+    config.vm.provider "virtualbox" do |vb|
+      vb.name = "bbrassarS"
+      vb.cpus = 1
+      vb.memory = 1024
+    end
+
+    config.vm.provision "shell", inline: <<-SHELL
+      printf -- 'alias k=kubectl\n' | tee /etc/profile.d/kubectl.sh
+    SHELL
+
+    config.vm.provision "shell",
+      path: "https://raw.githubusercontent.com/k3s-io/k3s/cca8facaa33a3ec7897349a8740fd96029590c31/install.sh", # https://github.com/k3s-io/k3s/releases/tag/v1.32.0+k3s1
+      args: [
+        "--server",
+        "--cluster-init",
+        "--flannel-backend=none",
+        "--write-kubeconfig-mode=644",
+        "--node-ip", ip_address,
+        "--bind-address", ip_address,
+      ],
+      sha512: "d26d80c7928c0a1bddad64db4b096f1c037e969f55e334842e16e2d9c9f34c8fe2b3e46a842a76f29fdb8daa930b9082ef7b25216e97f463c24fa02e5fd11b3c"
   end
-
-  config.vm.provision "shell", inline: <<-SHELL
-    printf -- 'alias k=kubectl\n' | tee /etc/profile.d/kubectl.sh
-  SHELL
-
-  config.vm.provision "shell",
-    path: "https://raw.githubusercontent.com/k3s-io/k3s/cca8facaa33a3ec7897349a8740fd96029590c31/install.sh", # https://github.com/k3s-io/k3s/releases/tag/v1.32.0+k3s1
-    args: [
-      "--server",
-      "--cluster-init",
-      "--flannel-backend=none",
-      "--write-kubeconfig-mode=644",
-      "--node-ip", ip_address,
-      "--bind-address", ip_address,
-    ],
-    sha512: "d26d80c7928c0a1bddad64db4b096f1c037e969f55e334842e16e2d9c9f34c8fe2b3e46a842a76f29fdb8daa930b9082ef7b25216e97f463c24fa02e5fd11b3c"
 end
