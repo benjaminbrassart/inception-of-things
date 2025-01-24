@@ -22,7 +22,6 @@ Vagrant.configure("2") do |config|
     server.vm.provision "shell",
       path: "https://raw.githubusercontent.com/k3s-io/k3s/cca8facaa33a3ec7897349a8740fd96029590c31/install.sh", # https://github.com/k3s-io/k3s/releases/tag/v1.32.0+k3s1
       args: [
-        "--server",
         "--cluster-init",
         "--flannel-backend=none",
         "--write-kubeconfig-mode=644",
