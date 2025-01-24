@@ -8,7 +8,7 @@
 - [x] Set hostname = bbrassarS
 - [x] Set VirtualBox machine name = bbrassarS
 - [x] SSH without password
-- [ ] Install K3s in controller mode
+- [x] Install K3s in controller mode
 
 ### Agent (bbrassarSW)
 
