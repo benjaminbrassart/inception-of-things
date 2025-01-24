@@ -33,4 +33,18 @@ Vagrant.configure("2") do |config|
       },
       sha512: "d26d80c7928c0a1bddad64db4b096f1c037e969f55e334842e16e2d9c9f34c8fe2b3e46a842a76f29fdb8daa930b9082ef7b25216e97f463c24fa02e5fd11b3c"
   end
+
+  config.vm.define "bbrassarSW" do |server|
+    ip_address = "192.168.56.111"
+
+    server.vm.box = "debian/bookworm64"
+    server.vm.network "private_network", ip: ip_address
+    server.vm.hostname = "bbrassarSW"
+
+    server.vm.provider "virtualbox" do |vb|
+      vb.name = "bbrassarSW"
+      vb.cpus = 1
+      vb.memory = 1024
+    end
+  end
 end
