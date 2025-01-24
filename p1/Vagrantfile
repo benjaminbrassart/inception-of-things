@@ -29,6 +29,9 @@ Vagrant.configure("2") do |config|
         "--node-ip", ip_address,
         "--bind-address", ip_address,
       ],
+      env: {
+        "INSTALL_K3S_EXEC": "server",
+      },
       sha512: "d26d80c7928c0a1bddad64db4b096f1c037e969f55e334842e16e2d9c9f34c8fe2b3e46a842a76f29fdb8daa930b9082ef7b25216e97f463c24fa02e5fd11b3c"
   end
 end
