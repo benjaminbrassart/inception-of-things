@@ -19,6 +19,8 @@ Vagrant.configure("2") do |config|
       vb.memory = 1024
     end
 
+    server.vm.synced_folder "k3s", "/var/lib/rancher/k3s", create: true
+
     server.vm.provision "shell", inline: <<-SHELL
       printf -- 'alias k=kubectl\n' | tee /etc/profile.d/kubectl.sh
     SHELL
