@@ -64,7 +64,7 @@ Vagrant.configure("2") do |config|
       path: k3s_install_url,
       args: [
         "--node-ip", ip_address,
-        "--server", "https://bbrassarS:6443",
+        "--server", "https://192.168.56.110:6443",
       ],
       env: {
         "INSTALL_K3S_EXEC": "agent",
