@@ -2,6 +2,10 @@
 # vi: set ft=ruby :
 
 Vagrant.configure("2") do |config|
+# https://github.com/k3s-io/k3s/releases/tag/v1.32.0+k3s1
+  k3s_install_url = "https://raw.githubusercontent.com/k3s-io/k3s/a897f6875ecab818346e02663d43cd83c9ee66ba/install.sh"
+  k3s_install_sha256 = "9d5fc42bf825d3e8dcc8682c8bac071b1de18019af81f85519ccbe5c919e0896"
+
   config.vm.define "bbrassarS" do |server|
     ip_address = "192.168.56.110"
 
@@ -20,7 +24,7 @@ Vagrant.configure("2") do |config|
     SHELL
 
     server.vm.provision "shell",
-      path: "https://raw.githubusercontent.com/k3s-io/k3s/cca8facaa33a3ec7897349a8740fd96029590c31/install.sh", # https://github.com/k3s-io/k3s/releases/tag/v1.32.0+k3s1
+      path: k3s_install_url,
       args: [
         "--cluster-init",
         "--flannel-backend=none",
@@ -31,7 +35,7 @@ Vagrant.configure("2") do |config|
       env: {
         "INSTALL_K3S_EXEC": "server",
       },
-      sha512: "d26d80c7928c0a1bddad64db4b096f1c037e969f55e334842e16e2d9c9f34c8fe2b3e46a842a76f29fdb8daa930b9082ef7b25216e97f463c24fa02e5fd11b3c"
+      sha256: k3s_install_sha256
   end
 
   config.vm.define "bbrassarSW" do |worker|
