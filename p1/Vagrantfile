@@ -27,7 +27,6 @@ Vagrant.configure("2") do |config|
       path: k3s_install_url,
       args: [
         "--cluster-init",
-        "--flannel-backend=none",
         "--write-kubeconfig-mode=644",
         "--node-ip", ip_address,
         "--bind-address", ip_address,
