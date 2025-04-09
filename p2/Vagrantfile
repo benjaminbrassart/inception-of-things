@@ -35,6 +35,7 @@ Vagrant.configure("2") do |config|
         },
         sha256: k3s_install_sha256
 
-      server.vm.provision "shell", path: "scripts/apply-configs.sh"
+      server.vm.provision "file", source: "conf/", destination: "~/conf"
+      server.vm.provision "shell", path: "scripts/apply-configs.sh", privileged: false
     end
   end
