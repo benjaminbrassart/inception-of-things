@@ -1,20 +1,20 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3-standaltwo/all.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.3-standalone/all.json
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: app-two
+  name: app-three
 spec:
   selector:
     matchLabels:
-      app: app-two
-  replicas: 1
+      app: app-three
+  replicas: 3
   template:
     metadata:
       labels:
-        app: app-two
+        app: app-three
     spec:
       containers:
-      - name: app-two
+      - name: app-three
         image: paulbouwer/hello-kubernetes:1.10.1
         ports:
           - containerPort: 80
