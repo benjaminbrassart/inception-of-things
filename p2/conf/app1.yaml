@@ -2,19 +2,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: helloworld
+  name: app-one
 spec:
   selector:
     matchLabels:
-      app: helloworld
+      app: app-one
   replicas: 1
   template:
     metadata:
       labels:
-        app: helloworld
+        app: app-one
     spec:
       containers:
-      - name: helloworld
+      - name: app-one
         image: paulbouwer/hello-kubernetes:1.10.1
         ports:
           - containerPort: 80
