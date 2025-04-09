@@ -15,13 +15,12 @@ Vagrant.configure("2") do |config|
 
       server.vm.provider "virtualbox" do |vb|
         vb.name = "bbrassarS"
-        vb.cpus = 1
-        vb.memory = 1024
+        vb.cpus = 2
+        vb.memory = 2048
       end
 
-      server.vm.provision "shell", inline: <<-SHELL
-        printf -- 'alias k=kubectl\n' | tee /etc/profile.d/kubectl.sh
-      SHELL
+      server.vm.provision "shell", path: "scripts/kubectl-alias.sh"
+      server.vm.provision "shell", path: "scripts/install-packages.sh"
 
       server.vm.provision "shell",
         path: k3s_install_url,
@@ -35,5 +34,7 @@ Vagrant.configure("2") do |config|
           "INSTALL_K3S_EXEC": "server",
         },
         sha256: k3s_install_sha256
+
+      server.vm.provision "shell", path: "scripts/apply-configs.sh"
     end
   end
