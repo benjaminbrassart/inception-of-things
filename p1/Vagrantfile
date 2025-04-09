@@ -20,9 +20,7 @@ Vagrant.configure("2") do |config|
       vb.memory = 1024
     end
 
-    server.vm.provision "shell", inline: <<-SHELL
-      printf -- 'alias k=kubectl\n' | tee /etc/profile.d/kubectl.sh
-    SHELL
+    server.vm.provision "shell", path: "scripts/kubectl-alias.sh"
 
     server.vm.provision "shell",
       path: k3s_install_url,
@@ -37,10 +35,7 @@ Vagrant.configure("2") do |config|
       },
       sha256: k3s_install_sha256
 
-    server.vm.provision "shell", inline: <<-SHELL
-      cp -v /var/lib/rancher/k3s/server/token /vagrant/token
-      cp -v /etc/rancher/k3s/k3s.yaml /vagrant/k3s.yaml
-    SHELL
+    server.vm.provision "shell", path: "scripts/export-token.sh"
   end
 
   config.vm.define "bbrassarSW" do |worker|
@@ -54,9 +49,7 @@ Vagrant.configure("2") do |config|
       vb.memory = 1024
     end
 
-    worker.vm.provision "shell", inline: <<-SHELL
-      printf -- 'alias k=kubectl\n' | tee /etc/profile.d/kubectl.sh
-    SHELL
+    server.vm.provision "shell", path: "scripts/kubectl-alias.sh"
 
     worker.vm.provision "shell",
       path: k3s_install_url,
