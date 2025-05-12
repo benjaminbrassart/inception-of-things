@@ -11,7 +11,7 @@ curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/doc
 chmod a+r /etc/apt/keyrings/docker.asc
 
 os_arch="$(dpkg --print-architecture)"
-os_release="$(. /etc/os-release && echo "$VERSION_CODENAME")"
+os_release="$(. /etc/os-release && echo "${VERSION_CODENAME}")"
 
 printf -- 'deb [arch=%s signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian %s stable' "${os_arch}" "${os_release}" | \
     tee /etc/apt/sources.list.d/docker.list > /dev/null
