@@ -8,4 +8,5 @@ apt-get remove -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin doc
 rm -f \
     /etc/apt/keyrings/docker.asc \
     /etc/apt/sources.list.d/docker.list \
-    /etc/profile.d/kubectl.sh
+    /etc/profile.d/kubectl.sh \
+    /usr/local/bin/argocd
