@@ -23,4 +23,5 @@ docker run hello-world > /dev/null
 
 # TODO install k3s
 # TODO install k3d
-# TODO add k=kubectl alias
+
+printf -- 'alias k=kubectl\n' > /etc/profile.d/kubectl.sh
