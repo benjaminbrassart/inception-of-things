@@ -33,7 +33,9 @@ apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin do
 
 docker run hello-world > /dev/null
 
-node_ip4="$(hostname -i)"
+usermod -aG docker bbrassar
+
+node_ip4="$(hostname -I | cut -d ' ' -f 1)"
 
 # Download k3s install script
 curl -fsSL "${k3s_install_url}" -o "${k3s_install}"
