@@ -1,7 +1,10 @@
 #!/usr/bin/env sh
 
+REPO=https://github.com/benjaminbrassart/iot-p3-bbrassar.git
+
 set -e
 
+kubectl create namespace dev
 kubectl create namespace argocd
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 
@@ -12,6 +15,18 @@ initial_password="$(kubectl -n argocd get secret argocd-initial-admin-secret -o 
 
 kubectl -n argocd delete secret argocd-initial-admin-secret
 
-kubectl port-forward svc/argocd-server -n argocd --address 0.0.0.0 8080:443
+# https://argo-cd.readthedocs.io/en/stable/getting_started/#creating-apps-via-cli
+kubectl config set-context --current --namespace=argocd
+argocd app create playground \
+    --repo "${REPO}" \
+    --file playground.yml \
+    --dest-server https://kubernetes.default.svc \
+    --dest-namespace dev
 
-printf -- 'ArgoCD initial password: %s\n' "${initial_password}"
+cat <<EOF
+===========================================================
+
+    ArgoCD initial password: ${initial_password}
+
+===========================================================
+EOF

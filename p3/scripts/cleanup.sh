@@ -1,3 +1,3 @@
 #!/usr/bin/env sh
 
-kubectl delete namespace argocd
+kubectl delete namespace argocd dev
