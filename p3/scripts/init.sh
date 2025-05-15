@@ -56,3 +56,5 @@ install -m 755 "${argocd_cli}" /usr/local/bin/argocd
 
 # Create kubectl alias
 printf -- 'alias k=kubectl\n' > /etc/profile.d/kubectl.sh
+
+k3d cluster create p3
