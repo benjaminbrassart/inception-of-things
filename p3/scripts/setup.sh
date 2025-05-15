@@ -1,7 +1,5 @@
 #!/usr/bin/env sh
 
-REPO=https://github.com/benjaminbrassart/iot-p3-bbrassar.git
-
 set -e
 
 kubectl create namespace dev
@@ -18,7 +16,7 @@ kubectl -n argocd delete secret argocd-initial-admin-secret
 # https://argo-cd.readthedocs.io/en/stable/getting_started/#creating-apps-via-cli
 kubectl config set-context --current --namespace=argocd
 argocd app create playground \
-    --repo "${REPO}" \
+    --repo https://github.com/benjaminbrassart/iot-p3-bbrassar.git \
     --file playground.yml \
     --dest-server https://kubernetes.default.svc \
     --dest-namespace dev
