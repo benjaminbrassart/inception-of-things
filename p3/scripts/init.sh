@@ -35,8 +35,6 @@ docker run hello-world > /dev/null
 
 usermod -aG docker bbrassar
 
-node_ip4="$(hostname -I | cut -d ' ' -f 1)"
-
 # Download k3d install script
 curl -fsSL "${k3d_install_url}" -o "${k3d_install}"
 # Download argocd cli
