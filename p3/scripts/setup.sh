@@ -19,7 +19,7 @@ kubectl --namespace argocd delete secret argocd-initial-admin-secret
 kubectl config set-context --current --namespace=argocd
 argocd app create playground \
     --repo https://github.com/benjaminbrassart/iot-p3-bbrassar.git \
-    --file playground.yml \
+    --path . \
     --dest-server https://kubernetes.default.svc \
     --dest-namespace dev
 
