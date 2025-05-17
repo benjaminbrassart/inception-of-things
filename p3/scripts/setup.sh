@@ -4,16 +4,16 @@ set -e
 
 kubectl create namespace dev
 kubectl create namespace argocd
-kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+kubectl apply --namespace argocd --filename https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 
-kubectl wait pods --all --for condition=Ready --namespace argocd --timeout=-1s
+kubectl wait pods --all --for condition=Ready --namespace argocd --timeout -1s
 
 argocd login --core --insecure
 
 # https://stackoverflow.com/a/68495551
-initial_password="$(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d)"
+initial_password="$(kubectl --namespace argocd get secret argocd-initial-admin-secret --output jsonpath="{.data.password}" | base64 -d)"
 
-kubectl -n argocd delete secret argocd-initial-admin-secret
+kubectl --namespace argocd delete secret argocd-initial-admin-secret
 
 # https://argo-cd.readthedocs.io/en/stable/getting_started/#creating-apps-via-cli
 kubectl config set-context --current --namespace=argocd
