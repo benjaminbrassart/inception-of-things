@@ -26,7 +26,7 @@ argocd app create playground \
 cat <<EOF
 ===========================================================
 
-    ArgoCD initial password: ${initial_password}
+    Argo CD initial password: ${initial_password}
 
 ===========================================================
 EOF
