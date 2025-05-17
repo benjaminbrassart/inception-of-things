@@ -6,7 +6,7 @@ kubectl create namespace dev
 kubectl create namespace argocd
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 
-kubectl wait pods --all --for condition=Ready --namespace argocd --timeout=-1
+kubectl wait pods --all --for condition=Ready --namespace argocd --timeout=-1s
 
 argocd login --core --insecure
 
