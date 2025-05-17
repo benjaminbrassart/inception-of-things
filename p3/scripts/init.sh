@@ -67,4 +67,6 @@ install -m 0755 "${argocd_cli}" /usr/local/bin/argocd
 # Create kubectl alias
 ln -vfs /usr/local/bin/kubectl /usr/local/bin/k
 
-k3d cluster create p3 --kubeconfig-update-default --kubeconfig-switch-context
+k3d cluster create p3 \
+    --kubeconfig-update-default --kubeconfig-switch-context \
+    --port "8880:80@loadbalancer"
