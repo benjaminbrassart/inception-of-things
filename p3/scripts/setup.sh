@@ -15,6 +15,8 @@ kubectl wait pods --all --for condition=Ready --namespace argocd --timeout -1s
 
 argocd login --core --insecure
 
+kubectl wait secret/argocd-initial-admin-secret --for create --namespace argocd --timeout -1s
+
 # https://stackoverflow.com/a/68495551
 initial_password="$(kubectl --namespace argocd get secret argocd-initial-admin-secret --output jsonpath="{.data.password}" | base64 -d)"
 
