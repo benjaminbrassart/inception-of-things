@@ -2,7 +2,6 @@
 
 set -e
 
-k3d cluster delete -a
 rm -f -- "$(which k3d)" "$(which argocd)"
 
 docker system prune -f
