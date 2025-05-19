@@ -9,7 +9,7 @@ k3d cluster create p3 \
 
 kubectl create namespace dev
 kubectl create namespace argocd
-kubectl apply --namespace argocd --filename https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+kubectl apply --namespace argocd --filename https://raw.githubusercontent.com/argoproj/argo-cd/v2.14.11/manifests/install.yaml
 
 kubectl wait pods --all --for condition=Ready --namespace argocd --timeout -1s
 
