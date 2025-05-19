@@ -35,8 +35,6 @@ printf -- 'deb [arch=%s signed-by=/etc/apt/keyrings/docker.asc] https://download
 apt-get -y update
 apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
-docker run hello-world > /dev/null
-
 usermod -aG docker bbrassar
 
 # Download k3d install script
