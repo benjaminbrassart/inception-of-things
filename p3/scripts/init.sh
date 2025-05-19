@@ -64,7 +64,3 @@ install -m 0755 "${argocd_cli}" /usr/local/bin/argocd
 
 # Create kubectl alias
 ln -vfs /usr/local/bin/kubectl /usr/local/bin/k
-
-k3d completion bash > /etc/bash_completion.d/k3d
-kubectl completion bash > /etc/bash_completion.d/kubectl
-argocd completion bash > /etc/bash_completion.d/argocd
