@@ -1,3 +1,3 @@
 #!/usr/bin/env sh
 
-helm repo remove argo
+helm repo remove gitlab
