@@ -2,7 +2,10 @@
 
 set -e
 
-k3d cluster create p3 --kubeconfig-update-default --kubeconfig-switch-context
+k3d cluster create p3 \
+    --kubeconfig-update-default --kubeconfig-switch-context \
+    --agents 1 \
+    --port 8888:30080@agent:0
 
 kubectl create namespace dev
 kubectl create namespace argocd
@@ -18,7 +21,7 @@ initial_password="$(kubectl --namespace argocd get secret argocd-initial-admin-s
 kubectl --namespace argocd delete secret argocd-initial-admin-secret
 
 # https://argo-cd.readthedocs.io/en/stable/getting_started/#creating-apps-via-cli
-kubectl config set-context --current --namespace=argocd
+kubectl config set-context --current --namespace argocd
 argocd app create playground \
     --repo https://github.com/benjaminbrassart/iot-p3-bbrassar.git \
     --path . \
