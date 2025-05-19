@@ -18,8 +18,6 @@ argocd login --core --insecure
 # https://stackoverflow.com/a/68495551
 initial_password="$(kubectl --namespace argocd get secret argocd-initial-admin-secret --output jsonpath="{.data.password}" | base64 -d)"
 
-kubectl --namespace argocd delete secret argocd-initial-admin-secret
-
 # https://argo-cd.readthedocs.io/en/stable/getting_started/#creating-apps-via-cli
 kubectl config set-context --current --namespace argocd
 argocd app create playground \
