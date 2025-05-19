@@ -21,7 +21,10 @@ argocd app create playground \
     --repo https://github.com/benjaminbrassart/iot-p3-bbrassar.git \
     --path . \
     --dest-server https://kubernetes.default.svc \
-    --dest-namespace dev
+    --dest-namespace dev \
+    --sync-policy auto \
+    --auto-prune \
+    --self-heal
 
 cat <<EOF
 ===========================================================
