@@ -1,0 +1,49 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Configuration version (from Vagrant 1.1 to 2.0.x)
+Vagrant.configure("2") do |config|
+
+    # The base image to create the VM
+    config.vm.box = "debian/bookworm64"
+  
+    # Define our first VM named "jfremondS"
+    config.vm.define "jfremondS" do |jfremondS|
+      # Change the hostname to "jfremondS"
+      jfremondS.vm.hostname = "jfremondS"
+      # Change the IP address to "192.168.56.110"
+      jfremondS.vm.network "private_network", ip: "192.168.56.110"
+      # VirtualBox configuration
+      jfremondS.vm.provider "virtualbox" do |v|
+        # Change the name to "jfremondS"
+        v.name = "jfremondS"
+        # Allow 1024 MB of RAM
+        v.memory = 1024
+        # Allow 1 CPU
+        v.cpus = 1
+      end
+      # Upload and execute the script "master.sh" within the VM
+      jfremondS.vm.provision "shell", path: "scripts/master.sh"
+    end
+  
+    # Define our second VM named "jfremondSW"
+    config.vm.define "jfremondSW" do |jfremondSW|
+      # Change the hostname to "jfremondSW"
+      jfremondSW.vm.hostname = "jfremondSW"
+      # Change the IP address to "192.168.56.111"
+      jfremondSW.vm.network "private_network", ip: "192.168.56.111"
+      # VirtualBox configuration
+      jfremondSW.vm.provider "virtualbox" do |v|
+        # Change the name to "jfremondSW"
+        v.name = "jfremondSW"
+        # Allow 1024 MB of RAM
+        v.memory = 1024
+        # Allow 1 CPU
+        v.cpus = 1
+      end
+      # Upload and execute the script "agent.sh" within the VM
+      jfremondSW.vm.provision "shell", path: "scripts/agent.sh"
+    end
+  
+  end
+  
