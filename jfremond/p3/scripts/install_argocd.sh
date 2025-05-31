@@ -4,7 +4,8 @@
 set -x
 
 # Create new k3d cluster
-k3d cluster create
+k3d cluster create \
+	--port "8888:30080@server:0"
 
 # Create namespaces for deployment and installation of Argo CD
 kubectl create namespace dev
