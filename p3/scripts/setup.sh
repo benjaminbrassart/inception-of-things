@@ -4,7 +4,7 @@ set -e
 
 k3d cluster create p3 \
     --kubeconfig-update-default --kubeconfig-switch-context \
-    --port 8888:30080@server
+    --port 8888:30080@server:0
 
 kubectl create namespace dev
 kubectl create namespace argocd
