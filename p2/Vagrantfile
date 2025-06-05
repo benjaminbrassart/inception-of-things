@@ -1,41 +1,34 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+# Configuration version (from Vagrant 1.1 to 2.0.x)
 Vagrant.configure("2") do |config|
-    # https://github.com/k3s-io/k3s/releases/tag/v1.32.3+k3s1
-    k3s_install_url = "https://raw.githubusercontent.com/k3s-io/k3s/079ffa8d99fb859cb8c001455e47efa65535d832/install.sh"
-    k3s_install_sha256 = "d75e014f2d2ab5d30a318efa5c326f3b0b7596f194afcff90fa7a7a91166d5f7"
 
-    master_ip_address = "192.168.56.110"
-
-    config.vm.define "bbrassarS" do |server|
-      server.vm.box = "debian/bookworm64"
-      server.vm.network "private_network", ip: master_ip_address
-      server.vm.hostname = "bbrassarS"
-
-      server.vm.provider "virtualbox" do |vb|
-        vb.name = "bbrassarS"
-        vb.cpus = 2
-        vb.memory = 2048
+    # The base image to create the VM
+    config.vm.box = "debian/bookworm64"
+  
+    # Define our VM named "bbrassarS"
+    config.vm.define "bbrassarS" do |bbrassarS|
+      # Change the hostname to "bbrassarS"
+      bbrassarS.vm.hostname = "bbrassarS"
+      # Change the IP address to "192.168.56.110"
+      bbrassarS.vm.network "private_network", ip: "192.168.56.110"
+      # VirtualBox configuration
+      bbrassarS.vm.provider "virtualbox" do |v|
+        # Change the name to "bbrassarS"
+        v.name = "bbrassarS"
+        # Allow 1024 MB of RAM
+        v.memory = 2048
+        # Allow 1 CPU
+        v.cpus = 2
       end
-
-      server.vm.provision "shell", path: "scripts/kubectl-alias.sh"
-      server.vm.provision "shell", path: "scripts/install-packages.sh"
-
-      server.vm.provision "shell",
-        path: k3s_install_url,
-        args: [
-          "--cluster-init",
-          "--write-kubeconfig-mode=644",
-          "--node-ip", master_ip_address,
-          "--bind-address", master_ip_address,
-        ],
-        env: {
-          "INSTALL_K3S_EXEC": "server",
-        },
-        sha256: k3s_install_sha256
-
-      server.vm.provision "file", source: "conf/", destination: "~/conf"
-      server.vm.provision "shell", path: "scripts/apply-configs.sh", privileged: false
+      # Copy the file hello-kubernetes-ingress.yaml in the VM 
+      bbrassarS.vm.provision "file",
+      source: "confs/",
+      destination: "$HOME/"
+      # Upload and execute the script "master.sh" within the VM
+      bbrassarS.vm.provision "shell", path: "scripts/master.sh"
     end
+  
   end
+  
