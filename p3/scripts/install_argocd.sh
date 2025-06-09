@@ -31,7 +31,7 @@ kubectl config set-context --current --namespace=argocd
 
 # Create new Argo CD app called 'iot'
 argocd app create iot \
-  --repo https://github.com/jfremond/k3d-repo.git \
+  --repo https://github.com/jfremond/jfremond-iot.git \
   --path . \
   --dest-server https://kubernetes.default.svc \
   --dest-namespace dev
